@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rabbitmq-consumer
+  namespace: default
+  labels:
+    app: rabbitmq-consumer
+spec:
+  selector:
+    matchLabels:
+      app: rabbitmq-consumer
+  template:
+    metadata:
+      labels:
+        app: rabbitmq-consumer
+    spec:
+      containers:
+      - name: rabbitmq-consumer
+        image: jeffhollan/rabbitmq-client:dev
+        imagePullPolicy: Always
+        command:
+          - receive
+        args:
+          - 'amqp://user:PASSWORD@rabbitmq.default.svc.cluster.local:5672'
+---
+apiVersion: kore.k8s.io/v1alpha1
+kind: ScaledObject
+metadata:
+  name: rabbitmq-consumer
+  namespace: default
+  labels:
+    deploymentName: rabbitmq-consumer
+spec:
+  scaleTargetRef:
+    deploymentName: rabbitmq-consumer
+  pollingInterval: 30
+  triggers:
+  - type: rabbitmq
+    metadata:
+      queueName: hello
+      host: 'amqp://user:PASSWORD@rabbitmq.default.svc.cluster.local:5672'
+      queueLength  : '5'
+---
