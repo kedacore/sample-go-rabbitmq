@@ -23,7 +23,7 @@ spec:
         args:
           - 'amqp://user:PASSWORD@rabbitmq.default.svc.cluster.local:5672'
 ---
-apiVersion: kore.k8s.io/v1alpha1
+apiVersion: keda.k8s.io/v1alpha1
 kind: ScaledObject
 metadata:
   name: rabbitmq-consumer
@@ -33,7 +33,7 @@ metadata:
 spec:
   scaleTargetRef:
     deploymentName: rabbitmq-consumer
-  pollingInterval: 30
+  pollingInterval: 5
   triggers:
   - type: rabbitmq
     metadata:

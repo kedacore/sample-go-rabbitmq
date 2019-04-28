@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: rabbitmq-sender
+  name: rabbitmq-publish
 spec:
   template:
     spec:
