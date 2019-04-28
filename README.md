@@ -28,14 +28,14 @@ cd sample-go-rabbitmq
 helm install --name rabbitmq --set rabbitmq.username=user,rabbitmq.password=PASSWORD stable/rabbitmq
 ```
 
-### Deploying this RabbitMQ consumer
+### Deploying a RabbitMQ consumer
 
-#### Deploy the consumer
+#### Deploy a consumer
 ```cli
 kubectl apply -f deploy/deploy-consumer.yaml
 ```
 
-#### Validate it has deployed
+#### Validate the consumer has deployed
 ```cli
 kubectl get deploy
 ```
@@ -50,13 +50,13 @@ rabbitmq-consumer   0         0         0            0           3s
 ### Publishing messages to the queue
 
 #### Deploy the publisher job
-The following job will publish 600 messages to a "hello" queue the container is listening to. You can modify the exact number of messages in the yaml file.
+The following job will publish 600 messages to a "hello" queue the deployment is listening to. You can modify the exact number of messages in the yaml file.
 
 ```cli
 kubectl apply -f deploy/deploy-publisher-job.yaml
 ```
 
-#### Validate the container scales
+#### Validate the deployment scales
 ```cli
 kubectl get deploy -w
 ```
