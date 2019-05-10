@@ -33,7 +33,9 @@ metadata:
 spec:
   scaleTargetRef:
     deploymentName: rabbitmq-consumer
-  pollingInterval: 5
+  pollingInterval: 5   # Optional. Default: 30 seconds
+  cooldownPeriod: 30   # Optional. Default: 300 seconds
+  maxReplicaCount: 30  # Optional. Default: 100
   triggers:
   - type: rabbitmq
     metadata:

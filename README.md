@@ -56,13 +56,13 @@ NAME                DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
 rabbitmq-consumer   0         0         0            0           3s
 ```
 
-[This consumer](https://github.com/kedacore/sample-go-rabbitmq/blob/master/cmd/receive/receive.go) is set to consume one message per instance, sleep for 1 second, and then acknowledge completion of the message.  This is used to simulate work.
+[This consumer](https://github.com/kedacore/sample-go-rabbitmq/blob/master/cmd/receive/receive.go) is set to consume one message per instance, sleep for 1 second, and then acknowledge completion of the message.  This is used to simulate work.  The [`ScaledObject` included in the above deployment](deploy/deploy-consumer.yaml) is set to scale to a minimum of 0 replicas on no events, and up to a maximum of 30 replicas on heavy events (optimizing for a queue length of 5 message per replica).  After 30 seconds of no events the replicas will be scaled down (cooldown period).  These settings can be changed on the `ScaledObject` as needed.
 
 ### Publishing messages to the queue
 
 #### Deploy the publisher job
 
-The following job will publish 600 messages to the "hello" queue the deployment is listening to. As the queue builds up, KEDA will help the horizontal pod autoscaler add more and more pods until the queue is drained after about 2 minutes and up to 100 concurrent pods.  You can modify the exact number of messages in the `deploy-publisher-job.yaml` file.  You can also control the min and max replicas in the `deploy-consumer.yaml` file.
+The following job will publish 300 messages to the "hello" queue the deployment is listening to. As the queue builds up, KEDA will help the horizontal pod autoscaler add more and more pods until the queue is drained after about 2 minutes and up to 30 concurrent pods.  You can modify the exact number of published messages in the `deploy-publisher-job.yaml` file.
 
 ```cli
 kubectl apply -f deploy/deploy-publisher-job.yaml
