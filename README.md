@@ -5,7 +5,7 @@ A simple docker container that will receive messages from a RabbitMQ queue and s
 ## Pre-requisites
 
 * Kubernetes cluster
-* [KEDA installed](https://github.com/kedacore/keda#setup) on the cluster
+* [KEDA installed](https://github.com/kedacore/keda#setup) on the cluster. Note that the `master` branch of this repo works with the `latest` image of KEDA's container. If you are experimenting with a KEDA image that is built based on `master` (not `latest`) then there is a possibility this example will not work properly.
 
 ## Setup
 
