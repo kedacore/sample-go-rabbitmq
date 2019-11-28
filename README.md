@@ -31,11 +31,8 @@ Helm 3
 ```
 helm install rabbitmq --set rabbitmq.username=user,rabbitmq.password=PASSWORD stable/rabbitmq
 ```
-⚠️ Some distributions of Kubernetes (like [Kind](https://kind.sigs.k8s.io/) require that you add `volumePermissions.enabled=true` to the parameters in the `--set` flag:
+⚠️ Some distributions of Kubernetes (like [Kind](https://kind.sigs.k8s.io/)) require that you add `volumePermissions.enabled=true` to the parameters in the `--set` option (e.g. `--set rabbitmq.username=user,rabbitmq.password=PASSWORD,volumePermissions.enabled=true`)
 
-```
---set rabbitmq.username=user,rabbitmq.password=PASSWORD,volumePermissions.enabled=true
-```
 
 ⚠️ Be sure to wait until the deployment has completed before continuing.  
 
