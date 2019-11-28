@@ -25,11 +25,16 @@ cd sample-go-rabbitmq
 #### Install RabbitMQ via Helm
 Helm 2
 ```cli
-helm install --name rabbitmq --set rabbitmq.username=user,rabbitmq.password=PASSWORD,volumePermissions.enabled=true stable/rabbitmq
+helm install --name rabbitmq --set rabbitmq.username=user,rabbitmq.password=PASSWORD stable/rabbitmq
 ```
 Helm 3
 ```
-helm install rabbitmq --set rabbitmq.username=user,rabbitmq.password=PASSWORD,volumePermissions.enabled=true stable/rabbitmq
+helm install rabbitmq --set rabbitmq.username=user,rabbitmq.password=PASSWORD stable/rabbitmq
+```
+⚠️ Some distributions of Kubernetes (like [Kind](https://kind.sigs.k8s.io/) require that you add `volumePermissions.enabled=true` to the parameters in the `--set` flag:
+
+```
+--set rabbitmq.username=user,rabbitmq.password=PASSWORD,volumePermissions.enabled=true
 ```
 
 ⚠️ Be sure to wait until the deployment has completed before continuing.  
