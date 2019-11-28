@@ -25,11 +25,11 @@ cd sample-go-rabbitmq
 #### Install RabbitMQ via Helm
 Helm 2
 ```cli
-helm install --name rabbitmq --set rabbitmq.username=user,rabbitmq.password=PASSWORD stable/rabbitmq
+helm install --name rabbitmq --set rabbitmq.username=user,rabbitmq.password=PASSWORD,volumePermissions.enabled=true stable/rabbitmq
 ```
 Helm 3
 ```
-helm install rabbitmq --set rabbitmq.username=user,rabbitmq.password=PASSWORD stable/rabbitmq
+helm install rabbitmq --set rabbitmq.username=user,rabbitmq.password=PASSWORD,volumePermissions.enabled=true stable/rabbitmq
 ```
 
 ⚠️ Be sure to wait until the deployment has completed before continuing.  
