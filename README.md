@@ -28,6 +28,15 @@ cd sample-go-rabbitmq
 helm install --name rabbitmq --set rabbitmq.username=user,rabbitmq.password=PASSWORD stable/rabbitmq
 ```
 
+
+NOTE: if you are running the rabbitMQ image on KinD, you will run into permission issues unless you set ``volumePermissions.enabled=true``
+
+Use the following command if you are using KinD
+
+```cli
+helm install --name rabbitmq --set rabbitmq.username=user,rabbitmq.password=PASSWORD,volumePermissions.enabled=true stable/rabbitmq
+```
+
 ⚠️ Be sure to wait until the deployment has completed before continuing.  
 
 ```cli
