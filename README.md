@@ -24,20 +24,29 @@ cd sample-go-rabbitmq
 
 #### Install RabbitMQ via Helm
 
-```cli
-helm install --name rabbitmq --set rabbitmq.username=user,rabbitmq.password=PASSWORD stable/rabbitmq
-```
+##### Helm 3
 
+```cli
+helm install rabbitmq --set rabbitmq.username=user,rabbitmq.password=PASSWORD stable/rabbitmq
+```
 
 NOTE: if you are running the rabbitMQ image on KinD, you will run into permission issues unless you set ``volumePermissions.enabled=true``
 
 Use the following command if you are using KinD
 
 ```cli
-helm install --name rabbitmq --set rabbitmq.username=user,rabbitmq.password=PASSWORD,volumePermissions.enabled=true stable/rabbitmq
+helm install rabbitmq --set rabbitmq.username=user,rabbitmq.password=PASSWORD,volumePermissions.enabled=true stable/rabbitmq
 ```
 
-⚠️ Be sure to wait until the deployment has completed before continuing.  
+##### Helm 2
+
+```cli
+helm install --name rabbitmq --set rabbitmq.username=user,rabbitmq.password=PASSWORD stable/rabbitmq
+```
+
+#### Wait for RabbitMQ to deploy
+
+⚠️ Be sure to wait until the deployment has completed before continuing. ⚠️
 
 ```cli
 kubectl get po
