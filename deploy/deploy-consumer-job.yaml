@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: rabbitmq-consumer
+data:
+  RabbitMqHost: YW1xcDovL3VzZXI6UEFTU1dPUkRAcmFiYml0bXEuZGVmYXVsdC5zdmMuY2x1c3Rlci5sb2NhbDo1Njcy
+  LocalHost: YW1xcDovL3VzZXI6UEFTU1dPUkRAMTI3LjAuMC4xOjU2NzI=
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledJob
+metadata:
+  name: rabbitmq-consumer
+  namespace: default
+spec:
+  jobTargetRef:
+    template:
+      spec:
+        containers:
+        - name: rabbitmq-client
+          image: tsuyoshiushio/rabbitmq-client:dev3
+          imagePullPolicy: Always
+          command: ["receive",  "amqp://user:PASSWORD@rabbitmq.default.svc.cluster.local:5672", "job"]
+          envFrom:
+            - secretRef:
+                name: rabbitmq-consumer
+        restartPolicy: Never
+    backoffLimit: 4  
+  pollingInterval: 10   # Optional. Default: 30 seconds
+  cooldownPeriod: 30   # Optional. Default: 300 seconds
+  maxReplicaCount: 30  # Optional. Default: 100
+  triggers:
+  - type: rabbitmq
+    metadata:
+      queueName: hello
+      host: RabbitMqHost
+      localhost: LocalHost
+      queueLength  : '5'
+---

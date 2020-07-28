@@ -1,4 +1,4 @@
-FROM golang:1.12.1 as builder
+FROM golang:1.13.1 as builder
 
 # Copy the code from the host and compile it
 WORKDIR $GOPATH/src/github.com/kedacore/sample-go-rabbitmq

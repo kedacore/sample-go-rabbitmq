@@ -3,7 +3,6 @@ package main
 import (
 	"log"
 	"os"
-	"time"
 
 	"github.com/streadway/amqp"
 )
@@ -16,6 +15,11 @@ func failOnError(err error, msg string) {
 
 func main() {
 	url := os.Args[1]
+	isDeployment := true
+	if len(os.Args) == 3 && os.Args[2] == "job" {
+		isDeployment = false
+	}
+
 	conn, err := amqp.Dial(url)
 	failOnError(err, "Failed to connect to RabbitMQ")
 	defer conn.Close()
@@ -53,16 +57,23 @@ func main() {
 	)
 	failOnError(err, "Failed to register a consumer")
 
-	forever := make(chan bool)
+	if isDeployment {
+		forever := make(chan bool)
 
-	go func() {
-		for d := range msgs {
-			log.Printf("Received a message: %s", d.Body)
-			time.Sleep(1 * time.Second)
-			d.Ack(false)
-		}
-	}()
+		go func() {
+			for d := range msgs {
+				log.Printf("Received a message: %s", d.Body)
+				// time.Sleep(1 * time.Second)
+				d.Ack(false)
+			}
+		}()
 
-	log.Printf(" [*] Waiting for messages. To exit press CTRL+C")
-	<-forever
+		log.Printf(" [*] Waiting for messages. To exit press CTRL+C")
+		<-forever
+	} else {
+		d := <-msgs
+		log.Printf("Received a message: Empty means Closed. :%s", d.Body)
+		d.Ack(false)
+	}
+
 }
