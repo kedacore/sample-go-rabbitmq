@@ -76,6 +76,40 @@ rabbitmq-consumer   0         0         0            0           3s
 
 [This consumer](https://github.com/kedacore/sample-go-rabbitmq/blob/master/cmd/receive/receive.go) is set to consume one message per instance, sleep for 1 second, and then acknowledge completion of the message.  This is used to simulate work.  The [`ScaledObject` included in the above deployment](deploy/deploy-consumer.yaml) is set to scale to a minimum of 0 replicas on no events, and up to a maximum of 30 replicas on heavy events (optimizing for a queue length of 5 message per replica).  After 30 seconds of no events the replicas will be scaled down (cooldown period).  These settings can be changed on the `ScaledObject` as needed.
 
+### Deploying a RabbitMQ consumer (ScaledJob) : Optional
+
+If you want to scale jobs instead of deployment you can follow this section. This sample also use the Local debugging feature. 
+
+#### Deploy ScaledJob 
+
+```yaml
+kubectl apply -f deploy/deploy-consumer-job.yaml
+```
+
+If you want to run on keda on kubernetes cluster, you can remove these sections. 
+
+```yaml
+  LocalHost: YW1xcDovL3VzZXI6UEFTU1dPUkRAMTI3LjAuMC4xOjU2NzI=
+```
+
+and 
+
+```yaml
+      localhost: LocalHost
+```
+#### Enable port-forward on your PC
+
+```bash
+kubectl port-forward service/rabbitmq 5672
+```
+
+#### Start KEDA locally
+
+```bash
+operator-sdk run local --watch-namespace="" --operator-flags="--zap-level=info" --enable-delve
+```
+For more details, refer to [Deploying: Custom KEDA locally outside cluster](https://github.com/kedacore/keda#deploying-custom-keda-locally-outside-cluster).
+
 ### Publishing messages to the queue
 
 #### Deploy the publisher job
