@@ -60,6 +60,5 @@ spec:
   secretTargetRef:
     - parameter: host
       name: rabbitmq-consumer-secret
-      key: host
+      key: RabbitMqHost
 ---
-
