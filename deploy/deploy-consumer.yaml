@@ -3,7 +3,7 @@ kind: Secret
 metadata:
   name: rabbitmq-consumer-secret
 data:
-  host: YW1xcDovL3VzZXI6UEFTU1dPUkRAcmFiYml0bXEuZGVmYXVsdC5zdmMuY2x1c3Rlci5sb2NhbDo1Njcy
+  RabbitMqHost: YW1xcDovL3VzZXI6UEFTU1dPUkRAcmFiYml0bXEuZGVmYXVsdC5zdmMuY2x1c3Rlci5sb2NhbDo1Njcy
 ---
 apiVersion: apps/v1
 kind: Deployment
