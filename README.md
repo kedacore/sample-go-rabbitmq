@@ -24,25 +24,38 @@ cd sample-go-rabbitmq
 
 #### Install RabbitMQ via Helm
 
-##### Helm 3
+Since the Helm stable repositoty was migrated to the Bitnami repository (https://github.com/helm/charts/tree/master/stable/rabbitmq), add the Bitnami repo and use it during the installation (bitnami/<chart> instead of stable/<chart>) 
 
 ```cli
-helm install rabbitmq --set rabbitmq.username=user,rabbitmq.password=PASSWORD stable/rabbitmq
+$ helm repo add bitnami https://charts.bitnami.com/bitnami
 ```
+
+##### Helm 3
+
+RabbitMQ Helm Chart version 7.0.0 or later
+```cli
+helm install rabbitmq --set auth.username=user --set auth.password=PASSWORD bitnami/rabbitmq
+```
+
+NOTE: With RabbitMQ Helm Chart version 6.x.x or earlier, username and password should be specified with rabbitmq.username and rabbitmq.password parameters https://hub.helm.sh/charts/bitnami/rabbitmq
 
 NOTE: if you are running the rabbitMQ image on KinD, you will run into permission issues unless you set ``volumePermissions.enabled=true``
 
 Use the following command if you are using KinD
 
 ```cli
-helm install rabbitmq --set rabbitmq.username=user,rabbitmq.password=PASSWORD,volumePermissions.enabled=true stable/rabbitmq
+helm install rabbitmq --set auth.username=user --set auth.password=PASSWORD --set volumePermissions.enabled=true bitnami/rabbitmq
 ```
+NOTE: For RabbitMQ Helm Chart version 6.x.x or earlier, refer to the earlier note
 
 ##### Helm 2
 
+RabbitMQ Helm Chart version 7.0.0 or later
 ```cli
-helm install --name rabbitmq --set rabbitmq.username=user,rabbitmq.password=PASSWORD stable/rabbitmq
+helm install --name rabbitmq --set auth.username=user --set auth.password=PASSWORD bitnami/rabbitmq
 ```
+
+NOTE: For RabbitMQ Helm Chart version 6.x.x or earlier, refer to the earlier note
 
 #### Wait for RabbitMQ to deploy
 
