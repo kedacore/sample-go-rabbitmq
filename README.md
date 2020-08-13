@@ -5,7 +5,7 @@ A simple docker container that will receive messages from a RabbitMQ queue and s
 ## Pre-requisites
 
 * Kubernetes cluster
-* [KEDA installed](https://github.com/kedacore/keda#setup) on the cluster
+* [KEDA installed](https://github.com/kedacore/keda#setup) on the cluster in the 'default' namespace.
 
 ## Setup
 
@@ -24,7 +24,7 @@ cd sample-go-rabbitmq
 
 #### Install RabbitMQ via Helm
 
-Since the Helm stable repositoty was migrated to the Bitnami repository (https://github.com/helm/charts/tree/master/stable/rabbitmq), add the Bitnami repo and use it during the installation (bitnami/<chart> instead of stable/<chart>) 
+Since the Helm stable repositoty was migrated to the Bitnami repository (https://github.com/helm/charts/tree/master/stable/rabbitmq), add the Bitnami repo and use it during the installation (bitnami/<chart> instead of stable/<chart>)
 
 ```cli
 $ helm repo add bitnami https://charts.bitnami.com/bitnami
@@ -44,7 +44,7 @@ NOTE: if you are running the rabbitMQ image on KinD, you will run into permissio
 Use the following command if you are using KinD
 
 ```cli
-helm install rabbitmq --set auth.username=user --set auth.password=PASSWORD --set volumePermissions.enabled=true bitnami/rabbitmq
+helm install rabbitmq --set auth.username=user --set auth.password=PASSWORD --set volumePermissions.enabled=true bitnami/rabbitmq --namespace default
 ```
 NOTE: For RabbitMQ Helm Chart version 6.x.x or earlier, refer to the earlier note
 
@@ -52,7 +52,7 @@ NOTE: For RabbitMQ Helm Chart version 6.x.x or earlier, refer to the earlier not
 
 RabbitMQ Helm Chart version 7.0.0 or later
 ```cli
-helm install --name rabbitmq --set auth.username=user --set auth.password=PASSWORD bitnami/rabbitmq
+helm install --name rabbitmq --set auth.username=user --set auth.password=PASSWORD bitnami/rabbitmq --namespace default
 ```
 
 NOTE: For RabbitMQ Helm Chart version 6.x.x or earlier, refer to the earlier note
@@ -104,7 +104,7 @@ kubectl apply -f deploy/deploy-publisher-job.yaml
 kubectl get deploy -w
 ```
 
-You can watch the pods spin up and start to process queue messages.  As the message length continues to increase, more pods will be pro-actively added.  
+You can watch the pods spin up and start to process queue messages.  As the message length continues to increase, more pods will be pro-actively added.
 
 You can see the number of messages vs the target per pod as well:
 ```cli
