@@ -86,30 +86,6 @@ If you want to scale jobs instead of deployment you can follow this section. Thi
 kubectl apply -f deploy/deploy-consumer-job.yaml
 ```
 
-If you want to run on keda on kubernetes cluster, you can remove these sections. 
-
-```yaml
-  LocalHost: YW1xcDovL3VzZXI6UEFTU1dPUkRAMTI3LjAuMC4xOjU2NzI=
-```
-
-and 
-
-```yaml
-      localhost: LocalHost
-```
-#### Enable port-forward on your PC
-
-```bash
-kubectl port-forward service/rabbitmq 5672
-```
-
-#### Start KEDA locally
-
-```bash
-operator-sdk run local --watch-namespace="" --operator-flags="--zap-level=info" --enable-delve
-```
-For more details, refer to [Deploying: Custom KEDA locally outside cluster](https://github.com/kedacore/keda#deploying-custom-keda-locally-outside-cluster).
-
 ### Publishing messages to the queue
 
 #### Deploy the publisher job
