@@ -49,7 +49,7 @@ spec:
       authenticationRef:
         name: rabbitmq-consumer-trigger
 ---
-apiVersion: keda.k8s.io/v1alpha1
+apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
 metadata:
   name: rabbitmq-consumer-trigger
