@@ -16,6 +16,7 @@ First you should clone the project:
 ```cli
 git clone https://github.com/kedacore/sample-go-rabbitmq
 cd sample-go-rabbitmq
+git checkout v2
 ```
 
 ### Creating a RabbitMQ queue
