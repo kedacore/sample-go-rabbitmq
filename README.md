@@ -5,7 +5,7 @@ A simple docker container that will receive messages from a RabbitMQ queue and s
 ## Pre-requisites
 
 * Kubernetes cluster
-* [KEDA 2.0 installed](https://keda.sh/docs/2.0/deploy/) on the cluster
+* [KEDA 2.0 installed](https://keda.sh/docs/deploy/) on the cluster
 
 ## Setup
 
