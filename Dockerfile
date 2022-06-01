@@ -1,4 +1,5 @@
 FROM golang:1.18 as builder
+ENV CGO_ENABLED=0
 
 WORKDIR /send-src
 COPY ./send/go.mod ./send/go.sum ./
