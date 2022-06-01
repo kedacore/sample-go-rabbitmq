@@ -1,12 +1,18 @@
-FROM golang:1.12.1 as builder
+FROM golang:1.18 as builder
 
-# Copy the code from the host and compile it
-WORKDIR $GOPATH/src/github.com/kedacore/sample-go-rabbitmq
+WORKDIR /send-src
+COPY ./send/go.mod ./send/go.sum ./
+RUN go mod download
+COPY ./send/* ./
+RUN go build -o /send
 
-COPY . .
+WORKDIR /receive-src
+COPY ./receive/go.mod ./receive/go.sum ./
+RUN go mod download
+COPY ./receive/* ./
+RUN go build -o /receive
 
-RUN CGO_ENABLED=0 GOOS=linux go install ./...
 
 FROM scratch
-COPY --from=builder /go/bin/receive /go/bin/send /usr/local/bin/
+COPY --from=builder /receive /send /usr/local/bin/
 CMD ["receive"]
