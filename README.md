@@ -24,7 +24,7 @@ cd sample-go-rabbitmq
 
 #### Install RabbitMQ via Helm
 
-Since the Helm stable repositoty was migrated to the [Bitnami Repository](https://github.com/helm/charts/tree/master/stable/rabbitmq), add the Bitnami repo and use it during the installation (bitnami/\<chart\> instead of stable/\<chart\>)
+Since the Helm stable repositoty was migrated to the [Bitnami Repository](https://github.com/helm/charts/tree/master/stable/rabbitmq), add the Bitnami repo and use it during the installation:
 
 ```cli
 helm repo add bitnami https://charts.bitnami.com/bitnami
@@ -38,9 +38,9 @@ RabbitMQ Helm Chart version 7.0.0 or later
 helm install rabbitmq --set auth.username=user --set auth.password=PASSWORD bitnami/rabbitmq --wait
 ```
 
-**NOTES:**
+**Notes:**
 
-* If using macOS with Apple Processor (ARM architecture), the default RabbitMQ image built by bitnami does not support ARM architecture so use the [official rabbitmq image](https://hub.docker.com/_/rabbitmq) instead. To install RabbitMQ using the official rabbitmq image run the following command:
+* The default RabbitMQ image built by bitnami does not support ARM CPU architecture so if running this demo on a computer with a ARM Processor use the [official rabbitmq image](https://hub.docker.com/_/rabbitmq) instead. To install RabbitMQ using the official rabbitmq image run the following command:
 
     ```cli
     helm install rabbitmq --set auth.username=user --set auth.password=PASSWORD --set image.tag=latest --set image.repository=rabbitmq bitnami/rabbitmq --wait
@@ -62,9 +62,9 @@ RabbitMQ Helm Chart version 7.0.0 or later
 helm install --name rabbitmq --set auth.username=user --set auth.password=PASSWORD bitnami/rabbitmq --wait
 ```
 
-**NOTES:**
+**Notes:**
 
-* If using macOS with Apple Processor (ARM architecture), refer to the earlier note
+* If running this demo on a computer with a ARM Processor, refer to the earlier note
 * If using KinD refer to the earlier note
 * For RabbitMQ Helm Chart version 6.x.x or earlier, refer to the earlier note
 
