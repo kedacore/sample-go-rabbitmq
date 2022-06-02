@@ -24,40 +24,51 @@ cd sample-go-rabbitmq
 
 #### Install RabbitMQ via Helm
 
-Since the Helm stable repositoty was migrated to the Bitnami repository (https://github.com/helm/charts/tree/master/stable/rabbitmq), add the Bitnami repo and use it during the installation (bitnami/<chart> instead of stable/<chart>) 
+Since the Helm stable repositoty was migrated to the [Bitnami Repository](https://github.com/helm/charts/tree/master/stable/rabbitmq), add the Bitnami repo and use it during the installation:
 
 ```cli
-$ helm repo add bitnami https://charts.bitnami.com/bitnami
+helm repo add bitnami https://charts.bitnami.com/bitnami
 ```
 
 ##### Helm 3
 
 RabbitMQ Helm Chart version 7.0.0 or later
+
 ```cli
 helm install rabbitmq --set auth.username=user --set auth.password=PASSWORD bitnami/rabbitmq --wait
 ```
 
-NOTE: With RabbitMQ Helm Chart version 6.x.x or earlier, username and password should be specified with rabbitmq.username and rabbitmq.password parameters https://hub.helm.sh/charts/bitnami/rabbitmq
+**Notes:**
 
-NOTE: if you are running the rabbitMQ image on KinD, you will run into permission issues unless you set ``volumePermissions.enabled=true``
+* The default RabbitMQ image built by bitnami does not support ARM CPU architecture so if running this demo on a computer with a ARM Processor use the [official rabbitmq image](https://hub.docker.com/_/rabbitmq) instead. To install RabbitMQ using the official rabbitmq image run the following command:
 
-Use the following command if you are using KinD
+    ```cli
+    helm install rabbitmq --set auth.username=user --set auth.password=PASSWORD --set image.tag=latest --set image.repository=rabbitmq bitnami/rabbitmq --wait
+    ```
 
-```cli
-helm install rabbitmq --set auth.username=user --set auth.password=PASSWORD --set volumePermissions.enabled=true bitnami/rabbitmq --wait
-```
-NOTE: For RabbitMQ Helm Chart version 6.x.x or earlier, refer to the earlier note
+* If you are running the rabbitMQ image on KinD, you will run into permission issues unless you set `volumePermissions.enabled=true`. Use the following command if you are using KinD:
+
+    ```cli
+    helm install rabbitmq --set auth.username=user --set auth.password=PASSWORD --set volumePermissions.enabled=true bitnami/rabbitmq --wait
+    ```
+
+* With RabbitMQ Helm Chart version 6.x.x or earlier, username and password should be specified with rabbitmq.username and rabbitmq.password parameters [https://hub.helm.sh/charts/bitnami/rabbitmq](https://hub.helm.sh/charts/bitnami/rabbitmq)
 
 ##### Helm 2
 
 RabbitMQ Helm Chart version 7.0.0 or later
+
 ```cli
 helm install --name rabbitmq --set auth.username=user --set auth.password=PASSWORD bitnami/rabbitmq --wait
 ```
 
-NOTE: For RabbitMQ Helm Chart version 6.x.x or earlier, refer to the earlier note
+**Notes:**
 
-#### Wait for RabbitMQ to deploy
+* If running this demo on a computer with a ARM Processor, refer to the earlier note
+* If using KinD refer to the earlier note
+* For RabbitMQ Helm Chart version 6.x.x or earlier, refer to the earlier note
+
+#### Wait for RabbitMQ to Deploy
 
 ⚠️ Be sure to wait until the deployment has completed before continuing. ⚠️
 
@@ -71,18 +82,20 @@ rabbitmq-0   1/1     Running   0          3m3s
 ### Deploying a RabbitMQ consumer
 
 #### Deploy a consumer
+
 ```cli
 kubectl apply -f deploy/deploy-consumer.yaml
 ```
 
 #### Validate the consumer has deployed
+
 ```cli
 kubectl get deploy
 ```
 
-You should see `rabbitmq-consumer` deployment with 0 pods as there currently aren't any queue messages.  It is scale to zero.
+You should see `rabbitmq-consumer` deployment with 0 pods as there currently aren't any queue messages and for that reason it is scaled to zero.
 
-```
+```cli
 NAME                DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
 rabbitmq-consumer   0         0         0            0           3s
 ```
@@ -100,6 +113,7 @@ kubectl apply -f deploy/deploy-publisher-job.yaml
 ```
 
 #### Validate the deployment scales
+
 ```cli
 kubectl get deploy -w
 ```
@@ -107,6 +121,7 @@ kubectl get deploy -w
 You can watch the pods spin up and start to process queue messages.  As the message length continues to increase, more pods will be pro-actively added.  
 
 You can see the number of messages vs the target per pod as well:
+
 ```cli
 kubectl get hpa
 ```
