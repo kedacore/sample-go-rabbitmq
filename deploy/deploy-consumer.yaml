@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
         - name: rabbitmq-consumer
-          image: jeffhollan/rabbitmq-client:dev
+          image: ghcr.io/kedacore/rabbitmq-client:v1.0
           imagePullPolicy: Always
           command:
             - receive
@@ -60,3 +60,4 @@ spec:
       name: rabbitmq-consumer-secret
       key: RabbitMqHost
 ---
+

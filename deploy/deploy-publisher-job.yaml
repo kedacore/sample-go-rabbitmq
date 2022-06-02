@@ -6,10 +6,14 @@ spec:
   template:
     spec:
       containers:
-      - name: rabbitmq-client
-        image: jeffhollan/rabbitmq-client:dev
-        imagePullPolicy: Always
-        command: ["send",  "amqp://user:PASSWORD@rabbitmq.default.svc.cluster.local:5672", "300"]
+        - name: rabbitmq-client
+          image: ghcr.io/kedacore/rabbitmq-client:v1.0
+          imagePullPolicy: Always
+          command:
+            [
+              "send",
+              "amqp://user:PASSWORD@rabbitmq.default.svc.cluster.local:5672",
+              "300",
+            ]
       restartPolicy: Never
   backoffLimit: 4
-

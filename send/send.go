@@ -19,8 +19,8 @@ func main() {
 	url := os.Args[1]
 	messageCount, err := strconv.Atoi(os.Args[2])
 	queueName := "hello"
-	if val, ok := os.Args[3]; ok {
-		queueName = val
+	if len(os.Args) > 3 {
+		queueName = os.Args[3]
 	}
 	failOnError(err, "Failed to parse second arg as messageCount : int")
 	conn, err := amqp.Dial(url)
@@ -32,12 +32,12 @@ func main() {
 	defer ch.Close()
 
 	q, err := ch.QueueDeclare(
-		queueName, 	// name
-		false,   	// durable
-		false,   	// delete when unused
-		false,   	// exclusive
-		false,   	// no-wait
-		nil,     	// arguments
+		queueName, // name
+		false,     // durable
+		false,     // delete when unused
+		false,     // exclusive
+		false,     // no-wait
+		nil,       // arguments
 	)
 	failOnError(err, "Failed to declare a queue")
 
