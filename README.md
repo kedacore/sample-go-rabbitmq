@@ -40,12 +40,6 @@ helm install rabbitmq --set auth.username=user --set auth.password=PASSWORD bitn
 
 **Notes:**
 
-* The default RabbitMQ image built by bitnami does not support ARM CPU architecture so if running this demo on a computer with a ARM Processor use the [official rabbitmq image](https://hub.docker.com/_/rabbitmq) instead. To install RabbitMQ using the official rabbitmq image run the following command:
-
-    ```cli
-    helm install rabbitmq --set auth.username=user --set auth.password=PASSWORD --set image.tag=latest --set image.repository=rabbitmq bitnami/rabbitmq --wait
-    ```
-
 * If you are running the rabbitMQ image on KinD, you will run into permission issues unless you set `volumePermissions.enabled=true`. Use the following command if you are using KinD:
 
     ```cli
