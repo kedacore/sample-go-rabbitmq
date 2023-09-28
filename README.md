@@ -24,7 +24,7 @@ cd sample-go-rabbitmq
 
 #### Install RabbitMQ via Helm
 
-Since the Helm stable repositoty was migrated to the [Bitnami Repository](https://github.com/helm/charts/tree/master/stable/rabbitmq), add the Bitnami repo and use it during the installation:
+Since the Helm stable repository was migrated to the [Bitnami Repository](https://github.com/helm/charts/tree/master/stable/rabbitmq), add the Bitnami repo and use it during the installation:
 
 ```cli
 helm repo add bitnami https://charts.bitnami.com/bitnami
