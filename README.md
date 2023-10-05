@@ -34,6 +34,9 @@ helm repo add bitnami https://charts.bitnami.com/bitnami
 
 RabbitMQ Helm Chart version 7.0.0 or later
 
+Please note that auth.username and auth.password parameter in below command are set to "user" and "PASSWORD" on purpose. It is advised not to change this for demo. 
+In case you need to  change those parameters, you will need to modify the deployment yaml files for the consumer and publisher accordingly including the secret part in deploy-consumer.yaml which is base64 encoded version of rabbitmq connection string. 
+
 ```cli
 helm install rabbitmq --set auth.username=user --set auth.password=PASSWORD bitnami/rabbitmq --wait
 ```
