@@ -35,7 +35,9 @@ helm repo add bitnami https://charts.bitnami.com/bitnami
 RabbitMQ Helm Chart version 7.0.0 or later
 
 ```cli
-helm install rabbitmq --set auth.username=user --set auth.password=PASSWORD bitnami/rabbitmq --wait
+helm install rabbitmq --set auth.username=user --set auth.password=PASSWORD \
+--set image.repository=bitnamilegacy/rabbitmq --set global.security.allowInsecureImages=true \
+bitnami/rabbitmq --wait
 ```
 
 **Notes:**
@@ -43,7 +45,9 @@ helm install rabbitmq --set auth.username=user --set auth.password=PASSWORD bitn
 * If you are running the rabbitMQ image on KinD, you will run into permission issues unless you set `volumePermissions.enabled=true`. Use the following command if you are using KinD:
 
     ```cli
-    helm install rabbitmq --set auth.username=user --set auth.password=PASSWORD --set volumePermissions.enabled=true bitnami/rabbitmq --wait
+    helm install rabbitmq --set auth.username=user --set auth.password=PASSWORD \
+    --set image.repository=bitnamilegacy/rabbitmq --set volumePermissions.image.repository=bitnamilegacy/os-shell \
+    --set global.security.allowInsecureImages=true --set volumePermissions.enabled=true bitnami/rabbitmq --wait
     ```
 
 * With RabbitMQ Helm Chart version 6.x.x or earlier, username and password should be specified with rabbitmq.username and rabbitmq.password parameters [https://hub.helm.sh/charts/bitnami/rabbitmq](https://hub.helm.sh/charts/bitnami/rabbitmq)
@@ -53,7 +57,9 @@ helm install rabbitmq --set auth.username=user --set auth.password=PASSWORD bitn
 RabbitMQ Helm Chart version 7.0.0 or later
 
 ```cli
-helm install --name rabbitmq --set auth.username=user --set auth.password=PASSWORD bitnami/rabbitmq --wait
+helm install --name rabbitmq --set auth.username=user --set auth.password=PASSWORD \
+--set image.repository=bitnamilegacy/rabbitmq --set volumePermissions.image.repository=bitnamilegacy/os-shell \
+--set global.security.allowInsecureImages=true bitnami/rabbitmq --wait
 ```
 
 **Notes:**
